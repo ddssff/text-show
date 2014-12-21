@@ -1,4 +1,4 @@
-{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE CPP, NoImplicitPrelude #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 {-|
 Module:      Text.Show.Text.GHC.Event
@@ -10,8 +10,10 @@ Portability: GHC
 
 Monomorphic 'Show' functions for data types in the @Event@ module.
 -}
-module Text.Show.Text.GHC.Event (showbEvent, showbFdKeyPrec) where 
+module Text.Show.Text.GHC.Event where 
 
+-- Module GHC.Event is excluded from the base module list for impl(ghcjs).
+#ifndef __GHCJS__
 import           Data.Text.Lazy.Builder (Builder, fromString)
 
 import           GHC.Event (Event, FdKey)
@@ -38,3 +40,4 @@ instance Show Event where
 instance Show FdKey where
     showbPrec = showbFdKeyPrec
     {-# INLINE showbPrec #-}
+#endif
